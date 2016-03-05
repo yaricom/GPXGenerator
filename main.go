@@ -73,9 +73,13 @@ func main()  {
 	
 	// set times
 	var pointTime = meta.Time
-	for _, point := range trkpnts  {
+	for i := range trkpnts  {
+		point := &trkpnts[i]
 		point.Time = pointTime
 		pointTime = pointTime.Add(time.Duration(delta) * time.Millisecond)
+	}
+
+	for _, point := range trkpnts  {
 		fmt.Println(point)
 	}
 
