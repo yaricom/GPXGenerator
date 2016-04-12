@@ -11,19 +11,19 @@ import (
 
 // The routine to amend GPX route definition file
 type GPX struct {
-	XMLName	xml.Name 	`xml:"http://www.topografix.com/GPX/1/1 gpx"`
-	Meta Metadata 		`xml:"metadata"`
+	XMLName	xml.Name 		`xml:"http://www.topografix.com/GPX/1/1 gpx"`
+	Meta Metadata 			`xml:"metadata"`
 	Trk Track 			`xml:"trk"`
 }
 
 type Metadata struct {
-	Time time.Time 		`xml:"time"`
+	Time time.Time			`xml:"time"`
 }
 
 type Track struct {
 	Name string			`xml:"name"`
 	Desc string			`xml:"desc"`
-	Segment TrackSegment `xml:"trkseg"`
+	Segment TrackSegment 		`xml:"trkseg"`
 }
 
 type TrackSegment struct {
@@ -31,10 +31,11 @@ type TrackSegment struct {
 }
 
 type TrackPoint struct {
-	Latitude float64	`xml:"lat,attr,omitempty"`
-	Longitude float64   `xml:"lon,attr,omitempty"`
-	Name string         `xml:"name"`
-	Time time.Time      `xml:"time"`
+	Latitude float64		`xml:"lat,attr,omitempty"`
+	Longitude float64   		`xml:"lon,attr,omitempty"`
+	Name string         		`xml:"name"`
+	Time time.Time      		`xml:"time"`
+	Elevation int32			`xml:"ele"`
 }
 
 func main()  {
@@ -77,6 +78,8 @@ func main()  {
 		point := &trkpnts[i]
 		point.Time = pointTime
 		pointTime = pointTime.Add(time.Duration(delta) * time.Millisecond)
+		point.Name = fmt.Sprintf("TP_%d", i)
+		point.Elevation = 10
 	}
 
 	for _, point := range trkpnts  {
